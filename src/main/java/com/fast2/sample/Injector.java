@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.arondor.common.management.mbean.annotation.Description;
+import com.arondor.common.management.mbean.annotation.LongDescription;
+import com.arondor.common.management.mbean.annotation.Mandatory;
 import com.fast2.model.punnet.Document;
 import com.fast2.model.punnet.Folder;
 import com.fast2.model.punnet.Punnet;
@@ -11,10 +14,16 @@ import com.fast2.model.task.TaskException;
 import com.fast2.model.task.annotation.TaskType;
 import com.fast2.task.common.BasicTask;
 
+@Description("Injector")
+@LongDescription("This task is an example of an injector structure")
 @TaskType(TaskType.Type.Loader)
 public class Injector extends BasicTask
 {
     private static final Logger LOG = Logger.getLogger(Injector.class);
+
+    @Mandatory
+    @Description("Nuxeo connection provider")
+    private ConnectionProvider connectionSetting;
 
     @Override
     public boolean runTask(Punnet punnet) throws TaskException
@@ -65,6 +74,16 @@ public class Injector extends BasicTask
 
         }
 
+    }
+
+    public ConnectionProvider getConnectionSetting()
+    {
+        return connectionSetting;
+    }
+
+    public void setConnectionSetting(ConnectionProvider connectionSetting)
+    {
+        this.connectionSetting = connectionSetting;
     }
 
 }
